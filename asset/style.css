@@ -1,0 +1,55 @@
+
+:root{
+  --bg:#fafcff;
+  --panel:#ffffff;
+  --ink:#0f172a;
+  --muted:#4b5563;
+  --line:#e5e7eb;
+  --accent:#0ea5e9;
+  --radius:14px;
+  --shadow:0 10px 25px rgba(2,6,23,.08);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:980px;margin:0 auto;padding:20px}
+
+.site-header{background:linear-gradient(180deg,#f5f8ff,#f9fbff);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:56px;height:56px;border-radius:10px;object-fit:cover;box-shadow:var(--shadow)}
+.brand-text h1{font-weight:700;letter-spacing:.2px;margin:0;font-size:clamp(1.2rem,2.8vw,1.8rem)}
+.subtitle{margin:.15rem 0 0 0;color:var(--muted)}
+
+.nav{display:flex;gap:18px;padding-top:8px;padding-bottom:8px}
+.nav a{color:#0b4660;padding:6px 8px;border-radius:10px}
+.nav a:hover{background:#e8f6ff}
+
+.rss-link{display:flex;align-items:center;gap:8px;color:#f97316}
+.rss-link span{display:none}
+@media (min-width:640px){ .rss-link span{display:inline} }
+
+.content{padding-top:10px}
+.toolbar{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0 16px}
+.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink);box-shadow:var(--shadow)}
+.toolbar input::placeholder{color:#9aa3af}
+
+.years{display:grid;gap:14px;margin:10px 0 30px}
+.year{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.year summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#f7fbff;border-bottom:1px solid var(--line)}
+.year summary::-webkit-details-marker{display:none}
+.year-title{font-weight:700;color:#0b4660}
+.count{color:var(--muted);font-size:.95rem}
+.list{margin:0;padding:0;list-style:none}
+.item{display:flex;gap:12px;padding:12px 18px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item a{color:var(--ink);font-weight:500}
+.item a:hover{color:var(--accent)}
+.item small{color:var(--muted)}
+
+.note{color:var(--muted)}
+
+.site-footer{border-top:1px solid var(--line);background:#f7fbff;margin-top:24px}

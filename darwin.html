@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sur les épaules de Darwin — Archives</title>
+  <meta name="description" content="Archives des émissions — Sur les épaules de Darwin." />
+  <link rel="alternate" type="application/rss+xml" title="Darwin (RSS)" href="data/darwin.rss" />
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <img src="assets/logo.png" alt="meyniel.ca" class="logo" onerror="this.style.display='none'"/>
+        <div class="brand-text">
+          <h1>Sur les épaules de Darwin</h1>
+          <p class="subtitle">Les émissions</p>
+        </div>
+      </div>
+      <a class="rss-link" href="data/darwin.rss" aria-label="Flux RSS">
+        <!-- Inline RSS SVG -->
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path fill="currentColor" d="M6.18 17.82a1.82 1.82 0 1 1 0-3.64 1.82 1.82 0 0 1 0 3.64Zm4.36 1.82H7.64a.91.91 0 0 1-.91-.91 9.27 9.27 0 0 1 9.27-9.27.91.91 0 0 1 .91.91v2.91a.91.91 0 0 1-.91.91 6.36 6.36 0 0 0-6.36 6.36.91.91 0 0 1-.91.91Zm7.27 0h-2.91a.91.91 0 0 1-.91-.91A12.18 12.18 0 0 1 24 6.55a.91.91 0 0 1 .91-.91h2.91a.91.91 0 0 1 .91.91A15.09 15.09 0 0 1 17.82 18.73a.91.91 0 0 1-.91.91Z" transform="translate(-6 -5)" />
+        </svg>
+        <span>RSS</span>
+      </a>
+    </div>
+    <nav class="container nav">
+      <a href="index.html">Accueil</a>
+      <a href="https://meyniel.github.io/tetris">Tetris</a>
+      <a href="https://meyniel.github.io/pdf-editor">Éditeur PDF</a>
+    </nav>
+  </header>
+
+  <main class="container content">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Rechercher un titre…" aria-label="Rechercher un titre" />
+      <select id="yearFilter" aria-label="Filtrer par année">
+        <option value="">Toutes les années</option>
+      </select>
+    </div>
+
+    <section id="episodes" class="years"></section>
+
+    <p class="note">Sources d'origine : liens directs vers les fichiers (storage.googleapis.com) tirés de l'ancienne page d'accueil.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Olivier Meyniel</p>
+    </div>
+  </footer>
+
+  <script src="assets/darwin.js" defer></script>
+</body>
+</html>
