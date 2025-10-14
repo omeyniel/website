@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-info">
+            <div class="info-panel">
+                <h1>TETRIS</h1>
+                <div class="score-section">
+                    <div class="score-item">
+                        <span class="label">SCORE</span>
+                        <span class="value" id="score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">LINES</span>
+                        <span class="value" id="lines">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">LEVEL</span>
+                        <span class="value" id="level">1</span>
+                    </div>
+                </div>
+                <div class="next-piece">
+                    <span class="label">NEXT</span>
+                    <canvas id="next-canvas" width="80" height="80"></canvas>
+                </div>
+                <div class="hold-piece">
+                    <span class="label">HOLD</span>
+                    <canvas id="hold-canvas" width="80" height="80"></canvas>
+                </div>
+                <div class="high-scores">
+                  <span class="label">HIGH SCORES</span>
+                  <div id="high-scores"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board">
+            <canvas id="game-canvas" width="300" height="600"></canvas>
+            <div class="game-overlay" id="game-overlay">
+                <div class="overlay-content">
+                    <h2 id="overlay-title">TETRIS</h2>
+                    <p id="overlay-message">Press SPACE to start</p>
+                    <div class="controls">
+                        <p>← → Move</p>
+                        <p>↓ Soft Drop</p>
+                        <p>↑ Rotate</p>
+                        <p>SPACE Hard Drop</p>
+                        <p>C Hold Piece</p>
+                        <p>P Pause</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="tetris.js"></script>
+</body>
+</html>
