@@ -105,7 +105,7 @@ class TetrisGame {
   static BOARD_WIDTH = 10;
   static BOARD_HEIGHT = 20;
   static INITIAL_DROP_INTERVAL = 1000;
-  static CLEAR_DELAY_MS = 1000;
+  static CLEAR_DELAY_MS = 500;
 
   constructor(boardWidth = TetrisGame.BOARD_WIDTH, boardHeight = TetrisGame.BOARD_HEIGHT) {
     this.boardWidth = boardWidth;
@@ -124,6 +124,7 @@ class TetrisGame {
     this.gameOver = false;
     this.dropTime = Date.now();
     this.isClearing = false;
+    this.clearingRows = [];
   }
 
   #initBoard() {
@@ -148,31 +149,39 @@ class TetrisGame {
   }
 
   #clearLines() {
-    let linesCleared = 0;
+    if (this.isClearing) return;
+
     const full = [];
     for (let row = this.boardHeight - 1; row >= 0; row--) {
       if (this.board[row].every(cell => cell !== 0)) {
         full.push(row);
       }
     }
-    if (full.length > 0) {
-      // After ~1s, apply removal + scoring, then continue
-      setTimeout(() => {
-        // Remove rows bottom-up while accounting for index shifts
-        const rows = [...clearingRows].sort((a,b) => a - b);
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i] - i;
-          this.board.splice(row, 1);
-          this.board.unshift(Array(this.boardWidth).fill(0));
-        }
+
+    if (full.length === 0) return;
+
+    this.isClearing = true;
+    this.clearingRows = full;
+
+    // After ~1s, apply removal + scoring, then continue
+    setTimeout(() => {
+      const linesCleared = this.clearingRows.length;
+      const rows = [...this.clearingRows].sort((a, b) => b - a);
+      for (const row of rows) {
+        this.board.splice(row, 1);
+      }
+      for (let i = 0; i < linesCleared; i++) {
+        this.board.unshift(Array(this.boardWidth).fill(0));
+      }
+      if (linesCleared > 0) {
         this.lines += linesCleared;
         this.score += this.#calculateScore(linesCleared);
         this.level = Math.floor(this.lines / 10) + 1;
         this.dropInterval = Math.max(50, TetrisGame.INITIAL_DROP_INTERVAL - (this.level - 1) * 50);
-      }, TetrisGame.CLEAR_DELAY_MS);
-
-
-    }
+      }
+      this.isClearing = false;
+      this.clearingRows = [];
+    }, TetrisGame.CLEAR_DELAY_MS);
   }
 
 /*//working without any 
@@ -295,6 +304,7 @@ class TetrisGame {
   }
 
   hardDrop() {
+    if (this.isClearing) return;
     if (this.currentPiece)  {
       while (this.currentPiece.move(0, 1, this.board, this.boardWidth, this.boardHeight)) {
         // Keep dropping until it can't move down
@@ -372,11 +382,12 @@ class TetrisRenderer {
 
   render(game) {
     this.#clearCtx(this.gameCtx);
+    const clearingRows = game.isClearing ? new Set(game.clearingRows) : null;
     for (let row = 0; row < game.board.length; row++) {
       for (let col = 0; col < game.board[row].length; col++) {
         const cell = game.board[row][col];
         if (cell) {
-          this.gameCtx.fillStyle = Piece.definitions[cell].color;
+          this.gameCtx.fillStyle = clearingRows && clearingRows.has(row) ? "#ffffff" : Piece.definitions[cell].color;
           this.gameCtx.fillRect(
             col * this.blockSize,
             row * this.blockSize,
@@ -477,12 +488,17 @@ class TetrisController {
     if (this.game.gameOver) {
       this.#handleGameOver();
     } else if (this.game.gameRunning && !this.game.gamePaused) {
+      if (this.game.isClearing) {
+        this.#updateRenderer();
+        window.requestAnimationFrame(this.loop);
+        return;
+      }
       const now = Date.now();
       if (now - this.lastDropTime > this.game.dropInterval) {
-      if (!this.game.moveCurrentPiece(0, 1)) {
-        this.game.placePiece();
-      }
-      this.lastDropTime = now;
+        if (!this.game.moveCurrentPiece(0, 1)) {
+          this.game.placePiece();
+        }
+        this.lastDropTime = now;
       }
       this.#updateRenderer();
       window.requestAnimationFrame(this.loop);
@@ -513,6 +529,7 @@ class TetrisController {
 
   handleKeyPress(e) {
     const g = this.game;
+    if (g.isClearing) return;
     // Game not running or paused
     if (!g.gameRunning || g.gamePaused) {
       if (e.code === "Space") {
