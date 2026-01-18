@@ -17,9 +17,11 @@ body {
 
 .game-container {
   display: flex;
-  gap: 30px;
+  column-gap: 30px;
+  row-gap: 6px;
+  flex-wrap: wrap;
   background: rgba(0, 0, 0, 0.8);
-  padding: 30px;
+  padding: 30px 30px 18px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   border: 2px solid #4a90e2;
@@ -156,6 +158,16 @@ body {
 
 .hidden {
   display: none;
+}
+
+.game-footer {
+  width: 100%;
+  text-align: center;
+  color: #4a90e2;
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  margin-top: 2px;
 }
 
 @media (max-width: 768px) {

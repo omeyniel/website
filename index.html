@@ -3,26 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <link rel="icon" href="assets/logo.jpg" />
   <title>Meyniel.ca</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <header>
-    <h1>Bienvenue sur meyniel.ca</h1>
-    <nav>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <img src="assets/logo.jpg" alt="meyniel.ca" class="logo" onerror="this.style.display='none'"/>
+        <div class="brand-text">
+          <h1>Bienvenue</h1>
+        </div>
+      </div>
+    </div>
+    <nav class="container nav">
       <a href="darwin.html">Darwin</a>
       <a href="/tetris/" class="tool-link">🎮 Jouer à Tetris</a>
       <a href="https://meyniel.github.io/pdf-editor">Éditeur PDF</a>
     </nav>
   </header>
 
-  <main>
-    <p>Expériences, outils et projets personnels.</p>
+  <main class="container content home-content">
+    <p class="intro">Curieux, touche‑à‑tout, bricoleur. J’ai créé ce site pour garantir un accès permanent et simple aux épisodes du podcast « Sur les épaules de Darwin ». Je l’enrichis sans but précis, juste pour le plaisir.</p>
   </main>
 
-  <footer>
-    <p>© 2025 Olivier Meyniel</p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Touchatoutix</p>
+    </div>
   </footer>
 </body>
 </html>

@@ -7,6 +7,14 @@ async function loadEpisodes() {
   const search = document.getElementById('search');
   const mount = document.getElementById('episodes');
 
+  function getEpisodeDateValue(episode) {
+    const match = (episode.url || '').match(/(\d{4}-\d{2}-\d{2})/);
+    if (!match) {
+      return 0;
+    }
+    return new Date(match[1]).getTime() || 0;
+  }
+
   // populate filter
   const years = [...new Set(episodes.map(e => e.year))].sort((a,b)=>b-a);
   years.forEach(y => {
@@ -28,7 +36,7 @@ async function loadEpisodes() {
     mount.innerHTML = '';
 
     Object.keys(groups).sort((a,b)=>b-a).forEach(year => {
-      const list = groups[year];
+      const list = groups[year].slice().sort((a, b) => getEpisodeDateValue(b) - getEpisodeDateValue(a));
       const details = document.createElement('details');
       details.className = 'year';
       details.open = !yf && !q; // open all by default unless filtering
