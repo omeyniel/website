@@ -18,7 +18,9 @@ export class PDFOperations {
     }
 
     const pdfBytes = await newPdfDoc.save()
-    return new Blob([pdfBytes], { type: "application/pdf" })
+    const bytes = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)
+    const safeBytes = new Uint8Array(bytes)
+    return new Blob([safeBytes], { type: "application/pdf" })
   }
 
   /**
@@ -35,7 +37,9 @@ export class PDFOperations {
     }
 
     const pdfBytes = await mergedPdf.save()
-    return new Blob([pdfBytes], { type: "application/pdf" })
+    const bytes = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)
+    const safeBytes = new Uint8Array(bytes)
+    return new Blob([safeBytes], { type: "application/pdf" })
   }
 
   /**
