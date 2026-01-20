@@ -11,8 +11,11 @@ export class PDFDocument {
   }
 
   async load(): Promise<void> {
-    const pdfjsLib = await import("pdfjs-dist")
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs")
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+      import.meta.url,
+    ).toString()
 
     const arrayBuffer = await this.file.arrayBuffer()
     this.pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
