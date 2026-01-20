@@ -121,3 +121,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.pdfedit-divider {
+  height: 1px;
+  background: var(--line, #e5e7eb);
+  margin: 10px 0 16px;
+}

@@ -19,16 +19,29 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2 text-balance">PDF Editor</h1>
-          <p className="text-muted-foreground text-lg">
-            Split PDFs by extracting pages or merge multiple PDFs into one
-          </p>
-        </header>
+    <>
+      <header className="site-header">
+        <div className="container header-row">
+          <div className="brand">
+            <img src="/assets/logo.jpg" alt="meyniel.ca" className="logo" onError={(event) => (event.currentTarget.style.display = "none")} />
+            <div className="brand-text">
+              <h1>PDF Editor</h1>
+              <p className="subtitle">Split PDFs by extracting pages or merge multiple PDFs into one</p>
+            </div>
+          </div>
+        </div>
+        <nav className="container nav">
+          <a href="/index.html">Accueil</a>
+          <a href="/tetris/" className="tool-link">🎮 Tetris</a>
+          <a href="/pdfedit/">Éditeur PDF</a>
+        </nav>
+      </header>
 
-        <div className="flex gap-2 mb-8">
+      <main className="min-h-screen bg-background">
+        <div className="container">
+          <div className="pdfedit-divider" />
+
+          <div className="flex gap-2 mb-8">
           <Button
             variant={mode === "split" ? "default" : "outline"}
             onClick={() => handleModeChange("split")}
@@ -45,11 +58,12 @@ export default function Home() {
             <Combine className="w-4 h-4 mr-2" />
             Merge PDFs
           </Button>
-        </div>
+          </div>
 
-        {mode === "split" ? <SplitMode controller={controller} /> : <MergeMode controller={controller} />}
-      </div>
-      <Toaster />
-    </main>
+          {mode === "split" ? <SplitMode controller={controller} /> : <MergeMode controller={controller} />}
+        </div>
+        <Toaster />
+      </main>
+    </>
   )
 }
