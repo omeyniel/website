@@ -1,4 +1,4 @@
-import { PDFDocument as PDFLibDocument } from "pdf-lib"
+import { PDFDocument as PDFLibDocument, degrees } from "pdf-lib"
 
 /**
  * PDFOperations class - Handles PDF manipulation operations
@@ -45,13 +45,16 @@ export class PDFOperations {
   /**
    * Reorder pages in a PDF
    */
-  static async reorderPDF(file: File, pageOrder: number[]): Promise<Blob> {
+  static async reorderPDF(file: File, pageOrder: Array<{ pageNumber: number; rotation: number }>): Promise<Blob> {
     const arrayBuffer = await file.arrayBuffer()
     const pdfDoc = await PDFLibDocument.load(arrayBuffer)
     const newPdfDoc = await PDFLibDocument.create()
 
-    for (const pageNum of pageOrder) {
-      const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNum - 1])
+    for (const page of pageOrder) {
+      const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [page.pageNumber - 1])
+      if (page.rotation % 360 !== 0) {
+        copiedPage.setRotation(degrees(page.rotation % 360))
+      }
       newPdfDoc.addPage(copiedPage)
     }
 

@@ -76,7 +76,7 @@ export default function Home() {
             className="flex-1 sm:flex-none"
           >
             <ArrowUpDown className="w-4 h-4 mr-2" />
-            Reorder PDF
+            Edit PDF
           </Button>
         </div>
 

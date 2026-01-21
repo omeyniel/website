@@ -5,7 +5,7 @@ import type { PDFController } from "@/lib/pdf-controller"
 import type { PDFDocument } from "@/lib/pdf-document"
 import { PDFUpload } from "./pdf-upload"
 import { Button } from "@/components/ui/button"
-import { ArrowDown, ArrowUp, Shuffle, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, RotateCw, Shuffle, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { Card } from "@/components/ui/card"
 
@@ -15,7 +15,7 @@ interface ReorderModeProps {
 
 export function ReorderMode({ controller }: ReorderModeProps) {
   const [document, setDocument] = useState<PDFDocument | null>(null)
-  const [order, setOrder] = useState<number[]>([])
+  const [order, setOrder] = useState<Array<{ pageNumber: number; rotation: number }>>([])
   const canvasRefs = useRef<Map<number, HTMLCanvasElement>>(new Map())
   const [, forceUpdate] = useState({})
   const { toast } = useToast()
@@ -24,7 +24,7 @@ export function ReorderMode({ controller }: ReorderModeProps) {
     try {
       const doc = await controller.addDocument(files[0])
       setDocument(doc)
-      setOrder(Array.from({ length: doc.getPageCount() }, (_, i) => i + 1))
+      setOrder(Array.from({ length: doc.getPageCount() }, (_, i) => ({ pageNumber: i + 1, rotation: 0 })))
       forceUpdate({})
     } catch (error) {
       toast({
@@ -37,13 +37,13 @@ export function ReorderMode({ controller }: ReorderModeProps) {
 
   useEffect(() => {
     if (!document) return
-    order.forEach(async (pageNum) => {
-      const canvas = canvasRefs.current.get(pageNum)
+    order.forEach(async (page) => {
+      const canvas = canvasRefs.current.get(page.pageNumber)
       if (canvas) {
         try {
-          await document.renderPage(pageNum, canvas, 0.9)
+          await document.renderPage(page.pageNumber, canvas, 0.9, page.rotation)
         } catch (error) {
-          console.error(`Error rendering page ${pageNum}:`, error)
+          console.error(`Error rendering page ${page.pageNumber}:`, error)
         }
       }
     })
@@ -60,6 +60,12 @@ export function ReorderMode({ controller }: ReorderModeProps) {
 
   const handleRemovePage = (index: number) => {
     setOrder((current) => current.filter((_, idx) => idx !== index))
+  }
+
+  const handleRotatePage = (index: number) => {
+    setOrder((current) =>
+      current.map((page, idx) => (idx === index ? { ...page, rotation: (page.rotation + 90) % 360 } : page)),
+    )
   }
 
   const handleReorder = async () => {
@@ -108,11 +114,11 @@ export function ReorderMode({ controller }: ReorderModeProps) {
 
           <div className="space-y-4">
             {order.map((pageNum, index) => (
-              <Card key={`${pageNum}-${index}`} className="p-4">
+              <Card key={`${pageNum.pageNumber}-${index}`} className="p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <div className="text-sm text-muted-foreground">#{index + 1}</div>
-                    <div className="text-sm font-medium text-foreground">Page {pageNum}</div>
+                    <div className="text-sm font-medium text-foreground">Page {pageNum.pageNumber}</div>
                   </div>
                   <div className="flex items-center gap-1">
                     <Button
@@ -136,6 +142,14 @@ export function ReorderMode({ controller }: ReorderModeProps) {
                     <Button
                       variant="ghost"
                       size="sm"
+                      onClick={() => handleRotatePage(index)}
+                      aria-label="Rotate right"
+                    >
+                      <RotateCw className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => handleRemovePage(index)}
                       aria-label="Remove page"
                     >
@@ -146,7 +160,7 @@ export function ReorderMode({ controller }: ReorderModeProps) {
                 <div className="mt-3">
                   <canvas
                     ref={(el) => {
-                      if (el) canvasRefs.current.set(pageNum, el)
+                      if (el) canvasRefs.current.set(pageNum.pageNumber, el)
                     }}
                     className="w-full h-auto"
                   />

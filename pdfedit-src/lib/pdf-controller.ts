@@ -79,7 +79,10 @@ export class PDFController {
     PDFOperations.downloadBlob(blob, "merged.pdf")
   }
 
-  async reorderDocument(docIndex: number, pageOrder: number[]): Promise<void> {
+  async reorderDocument(
+    docIndex: number,
+    pageOrder: Array<{ pageNumber: number; rotation: number }>,
+  ): Promise<void> {
     const doc = this.documents[docIndex]
     if (!doc) {
       throw new Error("Document not found")
