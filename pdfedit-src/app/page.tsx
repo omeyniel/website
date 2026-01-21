@@ -1,26 +1,38 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PDFController } from "@/lib/pdf-controller"
 import { SplitMode } from "@/components/split-mode"
 import { MergeMode } from "@/components/merge-mode"
+import { ReorderMode } from "@/components/reorder-mode"
 import { Button } from "@/components/ui/button"
-import { Scissors, Combine } from "lucide-react"
+import { Scissors, Combine, ArrowUpDown } from "lucide-react"
 import { Toaster } from "@/components/ui/toaster"
 
 const controller = new PDFController()
 
 export default function Home() {
-  const [mode, setMode] = useState<"split" | "merge">("split")
+  const [mode, setMode] = useState<"split" | "merge" | "reorder">("split")
+  const [headerShrunk, setHeaderShrunk] = useState(false)
 
-  const handleModeChange = (newMode: "split" | "merge") => {
+  const handleModeChange = (newMode: "split" | "merge" | "reorder") => {
     controller.clearDocuments()
     setMode(newMode)
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setHeaderShrunk(window.scrollY > 40)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header pdfedit-header${headerShrunk ? " shrunk" : ""}`}>
         <div className="container header-row">
           <div className="brand">
             <img src="/assets/logo.jpg" alt="meyniel.ca" className="logo" onError={(event) => (event.currentTarget.style.display = "none")} />
@@ -58,9 +70,23 @@ export default function Home() {
             <Combine className="w-4 h-4 mr-2" />
             Merge PDFs
           </Button>
-          </div>
+          <Button
+            variant={mode === "reorder" ? "default" : "outline"}
+            onClick={() => handleModeChange("reorder")}
+            className="flex-1 sm:flex-none"
+          >
+            <ArrowUpDown className="w-4 h-4 mr-2" />
+            Reorder PDF
+          </Button>
+        </div>
 
-          {mode === "split" ? <SplitMode controller={controller} /> : <MergeMode controller={controller} />}
+          {mode === "split" ? (
+            <SplitMode controller={controller} />
+          ) : mode === "merge" ? (
+            <MergeMode controller={controller} />
+          ) : (
+            <ReorderMode controller={controller} />
+          )}
         </div>
         <Toaster />
       </main>

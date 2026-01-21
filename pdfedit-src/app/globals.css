@@ -127,3 +127,43 @@
   background: var(--line, #e5e7eb);
   margin: 10px 0 16px;
 }
+
+.pdfedit-header {
+  transition: padding 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+
+.pdfedit-header .header-row {
+  transition: padding 220ms ease;
+}
+
+.pdfedit-header .logo {
+  transition: transform 220ms ease;
+}
+
+.pdfedit-header .brand-text h1 {
+  transition: font-size 220ms ease, letter-spacing 220ms ease;
+}
+
+.pdfedit-header .subtitle {
+  transition: opacity 220ms ease, height 220ms ease, margin 220ms ease;
+}
+
+.pdfedit-header.shrunk .header-row {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.pdfedit-header.shrunk .logo {
+  transform: scale(0.85);
+}
+
+.pdfedit-header.shrunk .brand-text h1 {
+  font-size: clamp(1.15rem, 2.6vw, 1.8rem);
+  letter-spacing: 0.2px;
+}
+
+.pdfedit-header.shrunk .subtitle {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+}

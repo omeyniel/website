@@ -43,6 +43,25 @@ export class PDFOperations {
   }
 
   /**
+   * Reorder pages in a PDF
+   */
+  static async reorderPDF(file: File, pageOrder: number[]): Promise<Blob> {
+    const arrayBuffer = await file.arrayBuffer()
+    const pdfDoc = await PDFLibDocument.load(arrayBuffer)
+    const newPdfDoc = await PDFLibDocument.create()
+
+    for (const pageNum of pageOrder) {
+      const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNum - 1])
+      newPdfDoc.addPage(copiedPage)
+    }
+
+    const pdfBytes = await newPdfDoc.save()
+    const bytes = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes)
+    const safeBytes = new Uint8Array(bytes)
+    return new Blob([safeBytes], { type: "application/pdf" })
+  }
+
+  /**
    * Download a blob as a file
    */
   static downloadBlob(blob: Blob, filename: string): void {

@@ -6,7 +6,7 @@ import type { PDFDocument } from "@/lib/pdf-document"
 import { PDFUpload } from "./pdf-upload"
 import { PDFViewer } from "./pdf-viewer"
 import { Button } from "@/components/ui/button"
-import { Combine, Trash2, X } from "lucide-react"
+import { ArrowDown, ArrowUp, Combine, Trash2, X } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { Card } from "@/components/ui/card"
 
@@ -66,6 +66,13 @@ export function MergeMode({ controller }: MergeModeProps) {
     forceUpdate({})
   }
 
+  const handleMove = (fromIndex: number, direction: "up" | "down") => {
+    const toIndex = direction === "up" ? fromIndex - 1 : fromIndex + 1
+    controller.moveDocument(fromIndex, toIndex)
+    setDocuments(controller.getDocuments())
+    forceUpdate({})
+  }
+
   const handleClear = () => {
     controller.clearDocuments()
     setDocuments([])
@@ -74,7 +81,9 @@ export function MergeMode({ controller }: MergeModeProps) {
 
   return (
     <div className="space-y-6">
-      <PDFUpload onFilesSelected={handleFilesSelected} multiple={true} />
+      {documents.length === 0 ? (
+        <PDFUpload onFilesSelected={handleFilesSelected} multiple={true} />
+      ) : null}
 
       {documents.length > 0 && (
         <>
@@ -101,14 +110,35 @@ export function MergeMode({ controller }: MergeModeProps) {
                   <h3 className="text-lg font-semibold text-foreground">
                     {index + 1}. {doc.getFileName()}
                   </h3>
-                  <Button variant="ghost" size="sm" onClick={() => handleRemove(index)}>
-                    <X className="w-4 h-4" />
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleMove(index, "up")}
+                      disabled={index === 0}
+                      aria-label="Move up"
+                    >
+                      <ArrowUp className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleMove(index, "down")}
+                      disabled={index === documents.length - 1}
+                      aria-label="Move down"
+                    >
+                      <ArrowDown className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => handleRemove(index)} aria-label="Remove">
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
                 <PDFViewer document={doc} docIndex={index} showSelection={false} />
               </Card>
             ))}
           </div>
+          <PDFUpload onFilesSelected={handleFilesSelected} multiple={true} compact={true} />
         </>
       )}
     </div>

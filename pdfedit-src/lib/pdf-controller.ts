@@ -24,6 +24,14 @@ export class PDFController {
     this.clearSelectedPages()
   }
 
+  moveDocument(fromIndex: number, toIndex: number): void {
+    if (fromIndex === toIndex) return
+    if (fromIndex < 0 || toIndex < 0) return
+    if (fromIndex >= this.documents.length || toIndex >= this.documents.length) return
+    const [doc] = this.documents.splice(fromIndex, 1)
+    this.documents.splice(toIndex, 0, doc)
+  }
+
   clearDocuments(): void {
     this.documents = []
     this.clearSelectedPages()
@@ -69,5 +77,16 @@ export class PDFController {
     const files = this.documents.map((doc) => doc.getFile())
     const blob = await PDFOperations.mergePDFs(files)
     PDFOperations.downloadBlob(blob, "merged.pdf")
+  }
+
+  async reorderDocument(docIndex: number, pageOrder: number[]): Promise<void> {
+    const doc = this.documents[docIndex]
+    if (!doc) {
+      throw new Error("Document not found")
+    }
+
+    const blob = await PDFOperations.reorderPDF(doc.getFile(), pageOrder)
+    const filename = `${doc.getFileName().replace(".pdf", "")}_reordered.pdf`
+    PDFOperations.downloadBlob(blob, filename)
   }
 }

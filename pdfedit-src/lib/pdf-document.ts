@@ -38,13 +38,13 @@ export class PDFDocument {
     return this.pdfDoc
   }
 
-  async renderPage(pageNumber: number, canvas: HTMLCanvasElement): Promise<void> {
+  async renderPage(pageNumber: number, canvas: HTMLCanvasElement, scale = 1.5): Promise<void> {
     if (!this.pdfDoc) {
       throw new Error("PDF not loaded")
     }
 
     const page = await this.pdfDoc.getPage(pageNumber)
-    const viewport = page.getViewport({ scale: 1.5 })
+    const viewport = page.getViewport({ scale })
     const context = canvas.getContext("2d")
 
     if (!context) {
