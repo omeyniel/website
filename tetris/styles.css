@@ -34,7 +34,7 @@
   display: flex;
   column-gap: 30px;
   row-gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   background: var(--tetris-panel);
   padding: 28px 30px 18px;
   border-radius: var(--radius);
@@ -43,14 +43,103 @@
   max-width: 900px;
   width: min(100%, 980px);
   animation: panel-rise 520ms ease-out 120ms both;
+  position: relative;
+  padding-bottom: 38px;
 }
 
 .game-info {
-  width: 200px;
+  width: 240px;
 }
+
+.game-stats {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 31px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.stats-nav a {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: #0b4660;
+  background: #edf7ff;
+  border: 1px solid #d7ebfb;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.stats-nav a:hover {
+  background: #e1f1ff;
+}
+
+.piece-stats {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  background: #eef4fb;
+  border-radius: 12px;
+  border: 1px solid var(--tetris-line);
+  width: 100%;
+}
+
+.piece-row {
+  display: grid;
+  grid-template-columns: 68px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+}
+
+.piece-icon {
+  display: block;
+  background: #0b1020;
+  border-radius: 8px;
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(14, 165, 233, 0.18);
+}
+
+.piece-bar-wrap {
+  position: relative;
+  height: 12px;
+  background: #e8f1ff;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--tetris-line);
+}
+
+.piece-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 180ms ease;
+}
+
+.piece-count {
+  font-weight: 700;
+  color: var(--tetris-ink);
+}
+
+.piece-I { background: #00f0f0; }
+.piece-O { background: #f0f000; }
+.piece-T { background: #a000f0; }
+.piece-S { background: #00f000; }
+.piece-Z { background: #f00000; }
+.piece-J { background: #0000f0; }
+.piece-L { background: #f0a000; }
 
 .info-panel h1 {
   font-size: 28px;
+  line-height: 1.1;
   text-align: center;
   margin-bottom: 30px;
   color: #0b4660;
@@ -185,13 +274,16 @@
 }
 
 .game-footer {
-  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
   text-align: center;
   color: var(--tetris-muted);
   font-size: 12px;
   font-weight: normal;
   letter-spacing: 0.2px;
-  margin-top: 2px;
+  margin: 0;
 }
 
 @keyframes page-fade {
@@ -226,9 +318,15 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    flex-wrap: wrap;
   }
 
   .game-info {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .game-stats {
     width: 100%;
     max-width: 300px;
   }

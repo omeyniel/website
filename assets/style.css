@@ -36,10 +36,23 @@ a:hover{text-decoration:underline}
 @media (min-width:640px){ .rss-link span{display:inline} }
 
 .content{padding-top:10px}
+.intro-card{
+  margin:8px 0 20px;
+  padding:16px 18px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.intro-card h2{
+  margin:0 0 6px;
+  font-size:1.1rem;
+  color:#0b2a3d;
+}
 .home-content .intro{
-  margin:8px 0 14px;
-  line-height:1.65;
-  font-size:1.05rem;
+  margin:0;
+  line-height:1.7;
+  font-size:1.15rem;
 }
 .message-card{
   margin:20px 0 8px;

@@ -115,6 +115,7 @@ class TetrisGame {
     this.nextPiece = null;
     this.holdPiece = null;
     this.canHold = true;
+    this.pieceCounts = this.#createPieceCounts();
     this.score = 0;
     this.lines = 0;
     this.level = 1;
@@ -131,9 +132,19 @@ class TetrisGame {
     this.board = Array(this.boardHeight).fill().map(() => Array(this.boardWidth).fill(0));
   }
 
+  #createPieceCounts() {
+    return Object.keys(Piece.definitions).reduce((acc, type) => {
+      acc[type] = 0;
+      return acc;
+    }, {});
+  }
+
   #generatePiece() {
     const pieceTypes = Object.keys(Piece.definitions);
     const pieceType = pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
+    if (this.pieceCounts && typeof this.pieceCounts[pieceType] === "number") {
+      this.pieceCounts[pieceType] += 1;
+    }
     const piece = new Piece(pieceType, Math.floor(this.boardWidth / 2) - 1, 0, 0);
     return piece;
   }
@@ -251,6 +262,7 @@ class TetrisGame {
 */
   startGame() {
     this.#initBoard();
+    this.pieceCounts = this.#createPieceCounts();
     this.currentPiece = this.#generatePiece();
     this.nextPiece = this.#generatePiece();
     this.holdPiece = null;
@@ -355,6 +367,7 @@ class TetrisRenderer {
     this.nextCtx = nextCanvas.getContext("2d");
     this.holdCtx = holdCanvas.getContext("2d");
     this.blockSize = blockSize;
+    this.pieceIconsDrawn = false;
   }
 
   #clearCtx(ctx) {
@@ -414,6 +427,7 @@ class TetrisRenderer {
     document.getElementById("score").textContent = game.score;
     document.getElementById("lines").textContent = game.lines;
     document.getElementById("level").textContent = game.level;
+    this.renderPieceStats(game.pieceCounts);
   }
 
   showOverlay(title = TetrisRenderer.DEFAULT_TITLE, message = TetrisRenderer.DEFAULT_MESSAGE) {
@@ -433,6 +447,35 @@ class TetrisRenderer {
   renderHighScores(highScores) {
     const container = document.getElementById("high-scores");
     container.innerHTML = highScores.map((s, i) => `<p>${i + 1}. ${s.score}</p>`).join("");
+  }
+
+  renderPieceStats(pieceCounts) {
+    if (!pieceCounts) return;
+    const types = Object.keys(pieceCounts);
+    const maxCount = Math.max(0, ...types.map((type) => pieceCounts[type]));
+
+    types.forEach((type) => {
+      const count = pieceCounts[type];
+      const countEl = document.getElementById(`count-${type}`);
+      if (countEl) countEl.textContent = count;
+
+      const barEl = document.getElementById(`bar-${type}`);
+      if (barEl) {
+        const pct = maxCount > 0 ? (count / maxCount) * 100 : 0;
+        barEl.style.width = `${pct}%`;
+      }
+    });
+
+    if (!this.pieceIconsDrawn) {
+      types.forEach((type) => {
+        const canvas = document.getElementById(`piece-icon-${type}`);
+        if (canvas) {
+          const piece = new Piece(type, 0, 0, 0);
+          piece.draw(canvas, 10, true, TetrisRenderer.STROKE_COLOR);
+        }
+      });
+      this.pieceIconsDrawn = true;
+    }
   }
 }
 
@@ -587,5 +630,6 @@ window.addEventListener("load", () => {
     const renderer = new TetrisRenderer(gameCanvas, nextCanvas, holdCanvas);
     const controller = new TetrisController(game, renderer);
 
+    renderer.renderPieceStats(game.pieceCounts);
     renderer.showOverlay("TETRIS", "Press SPACE to start");
 });
