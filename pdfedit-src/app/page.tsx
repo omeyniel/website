@@ -44,8 +44,8 @@ export default function Home() {
         </div>
         <nav className="container nav">
           <a href="/index.html">Accueil</a>
+          <a href="/darwin.html">Darwin</a>
           <a href="/tetris/" className="tool-link">🎮 Tetris</a>
-          <a href="/pdfedit/">Éditeur PDF</a>
         </nav>
       </header>
 

@@ -41,6 +41,81 @@ a:hover{text-decoration:underline}
   line-height:1.65;
   font-size:1.05rem;
 }
+.message-card{
+  margin:20px 0 8px;
+  padding:18px 20px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.message-card h2{
+  margin:0 0 6px;
+  font-size:1.2rem;
+  color:#0b2a3d;
+}
+.message-note{
+  margin:0 0 14px;
+  color:var(--muted);
+}
+.message-form{
+  display:grid;
+  gap:12px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+}
+.message-form label{
+  display:grid;
+  gap:6px;
+  font-weight:600;
+  color:#0b2a3d;
+}
+.message-field{
+  grid-column:1 / -1;
+}
+.message-form input,
+.message-form textarea{
+  font:inherit;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+}
+.message-form textarea{
+  resize:vertical;
+  min-height:160px;
+}
+.form-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.char-count{
+  color:var(--muted);
+  font-size:.95rem;
+}
+.message-form button{
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+}
+.message-form button:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+.form-status{
+  margin:2px 0 0;
+  color:#0b2a3d;
+  min-height:1.2em;
+}
 .toolbar{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:12px 0 16px}
 .toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink);box-shadow:var(--shadow)}
 .toolbar input::placeholder{color:#9aa3af}

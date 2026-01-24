@@ -343,8 +343,8 @@ class TetrisGame {
 class TetrisRenderer {
   static DEFAULT_TITLE = "TETRIS";
   static DEFAULT_MESSAGE = "Press SPACE to start";
-  static CLEAR_COLOR = "#000";
-  static STROKE_COLOR = "#fff";
+  static CLEAR_COLOR = "#0b1020";
+  static STROKE_COLOR = "#e2e8f0";
 
 
   constructor(gameCanvas, nextCanvas, holdCanvas, blockSize = BLOCK_SIZE) {
