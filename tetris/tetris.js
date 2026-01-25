@@ -619,6 +619,10 @@ class TetrisController {
     }
     this.#updateRenderer();
   }
+
+  triggerAction(code) {
+    this.handleKeyPress({ code });
+  }
 }
 
 // --- Initialization ---
@@ -630,6 +634,35 @@ window.addEventListener("load", () => {
     const renderer = new TetrisRenderer(gameCanvas, nextCanvas, holdCanvas);
     const controller = new TetrisController(game, renderer);
 
+    const wireTouchControls = () => {
+      const controls = document.querySelector(".touch-controls");
+      if (!controls) return;
+      controls.addEventListener("touchstart", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const action = target.getAttribute("data-action");
+        if (!action) return;
+        event.preventDefault();
+        if (action === "Start") {
+          controller.triggerAction("Space");
+        } else {
+          controller.triggerAction(action);
+        }
+      }, { passive: false });
+      controls.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const action = target.getAttribute("data-action");
+        if (!action) return;
+        if (action === "Start") {
+          controller.triggerAction("Space");
+        } else {
+          controller.triggerAction(action);
+        }
+      });
+    };
+
+    wireTouchControls();
     renderer.renderPieceStats(game.pieceCounts);
     renderer.showOverlay("TETRIS", "Press SPACE to start");
 });

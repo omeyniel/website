@@ -30,6 +30,10 @@
   padding: 16px 20px 28px;
 }
 
+.touch-controls {
+  display: none;
+}
+
 .game-container {
   display: flex;
   column-gap: 30px;
@@ -329,6 +333,42 @@
   .game-stats {
     width: 100%;
     max-width: 300px;
+  }
+
+  .tetris-shell {
+    padding-bottom: 96px;
+  }
+
+  .touch-controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px 12px 14px;
+    background: rgba(245, 249, 255, 0.96);
+    border-top: 1px solid var(--tetris-line);
+    box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.12);
+    z-index: 20;
+    touch-action: none;
+  }
+
+  .touch-btn {
+    appearance: none;
+    border: 1px solid #d7ebfb;
+    background: #edf7ff;
+    color: #0b4660;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 10px 8px;
+    border-radius: 999px;
+  }
+
+  .touch-btn:active {
+    transform: translateY(1px);
+    background: #e1f1ff;
   }
 
   .info-panel h1 {
