@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mancala</title>
+    <link rel="icon" href="/assets/logo.jpg" />
+    <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-row">
+        <div class="brand">
+          <img src="/assets/logo.jpg" alt="meyniel.ca" class="logo" onerror="this.style.display='none'"/>
+          <div class="brand-text">
+            <h1>Mancala</h1>
+            <p class="subtitle">Humain contre Touchatoutix</p>
+          </div>
+        </div>
+      </div>
+      <nav class="container nav">
+        <a href="/index.html">Accueil</a>
+        <a href="/darwin.html">Darwin</a>
+        <a href="/tetris/" class="tool-link">🎮 Tetris</a>
+        <a href="/mancala/">Mancala</a>
+        <a href="/pdfedit/">Éditeur PDF</a>
+      </nav>
+    </header>
+
+    <main class="container content mancala-content">
+      <section class="intro-card mancala-hero">
+        <div class="mancala-copy">
+          <h2>Règles basiques</h2>
+          <p class="lede">
+            Type Kalah. Tu joues en bas (pits 1–6). Touchatoutix en haut. Dernière
+            graine dans ton magasin = rejoue. Capture si tu termines dans un pit vide
+            de ton côté et que l’opposé n’est pas vide.
+          </p>
+        </div>
+        <div class="panel">
+          <div class="status" id="status">À toi de jouer.</div>
+          <div class="meta" id="meta">Touchatoutix heuristique moyenne (rapide, pas nulle).</div>
+          <button class="btn" id="restart" type="button">Relancer</button>
+        </div>
+      </section>
+
+      <section class="board-wrap">
+        <div class="board" id="board" aria-label="Plateau de Mancala"></div>
+      </section>
+
+      <section class="intro-card rules">
+        <h2>Rappel rapide</h2>
+        <ul>
+          <li>Tu choisis un pit en bas, puis les graines tournent dans le sens horaire.</li>
+          <li>On saute le magasin adverse.</li>
+          <li>Si ton dernier coup finit dans ton magasin, tu rejoues.</li>
+          <li>Si ton dernier coup finit dans un pit vide de ton côté, tu captures l’opposé.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2025 Touchatoutix</p>
+      </div>
+    </footer>
+
+    <script src="game.js"></script>
+  </body>
+</html>
