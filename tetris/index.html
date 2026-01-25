@@ -28,13 +28,15 @@
                         <span class="value" id="level">1</span>
                     </div>
                 </div>
-                <div class="next-piece">
-                    <span class="label">NEXT</span>
-                    <canvas id="next-canvas" width="80" height="80"></canvas>
-                </div>
-                <div class="hold-piece">
-                    <span class="label">HOLD</span>
-                    <canvas id="hold-canvas" width="80" height="80"></canvas>
+                <div class="piece-duo">
+                    <div class="next-piece">
+                        <span class="label">NEXT</span>
+                        <canvas id="next-canvas" width="80" height="80"></canvas>
+                    </div>
+                    <div class="hold-piece">
+                        <span class="label">HOLD</span>
+                        <canvas id="hold-canvas" width="80" height="80"></canvas>
+                    </div>
                 </div>
                 <div class="high-scores">
                   <span class="label">HIGH SCORES</span>
@@ -44,6 +46,10 @@
         </div>
         
         <div class="game-board">
+            <div class="mobile-header">
+                <div class="mobile-title">TETRIS</div>
+                <a class="mobile-home" href="/">Accueil</a>
+            </div>
             <canvas id="game-canvas" width="300" height="600"></canvas>
             <div class="game-overlay" id="game-overlay">
                 <div class="overlay-content">

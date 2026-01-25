@@ -423,6 +423,7 @@ class TetrisRenderer {
     }
     this.#drawNext(game.nextPiece);
     this.#drawHold(game.holdPiece);
+    this.#updateUiState(game);
     // Update score, lines, level
     document.getElementById("score").textContent = game.score;
     document.getElementById("lines").textContent = game.lines;
@@ -476,6 +477,18 @@ class TetrisRenderer {
       });
       this.pieceIconsDrawn = true;
     }
+  }
+
+  #updateUiState(game) {
+    const body = document.body;
+    if (!body) return;
+    let state = "idle";
+    if (game.gameOver) {
+      state = "over";
+    } else if (game.gameRunning) {
+      state = "running";
+    }
+    body.dataset.gameState = state;
   }
 }
 
@@ -664,5 +677,6 @@ window.addEventListener("load", () => {
 
     wireTouchControls();
     renderer.renderPieceStats(game.pieceCounts);
+    document.body.dataset.gameState = "idle";
     renderer.showOverlay("TETRIS", "Press SPACE to start");
 });

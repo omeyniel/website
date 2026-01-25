@@ -225,6 +225,44 @@
   position: relative;
 }
 
+.mobile-title {
+  display: none;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #0b4660;
+  margin-bottom: 10px;
+}
+
+.mobile-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.mobile-home {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: #0b4660;
+  background: #edf7ff;
+  border: 1px solid #d7ebfb;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mobile-home:hover {
+  background: #e1f1ff;
+}
+
+.piece-duo {
+  display: grid;
+  gap: 18px;
+}
+
 #game-canvas {
   background: var(--tetris-dark);
   border: 2px solid rgba(14, 165, 233, 0.5);
@@ -328,15 +366,18 @@
   .game-info {
     width: 100%;
     max-width: 300px;
+    order: 2;
   }
 
   .game-stats {
     width: 100%;
     max-width: 300px;
+    order: 3;
+    display: none;
   }
 
   .tetris-shell {
-    padding-bottom: 96px;
+    padding-bottom: 130px;
   }
 
   .touch-controls {
@@ -347,7 +388,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
-    padding: 10px 12px 14px;
+    padding: 8px 12px 10px;
     background: rgba(245, 249, 255, 0.96);
     border-top: 1px solid var(--tetris-line);
     box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.12);
@@ -372,7 +413,93 @@
   }
 
   .info-panel h1 {
-    font-size: 24px;
+    display: none;
+  }
+
+  .score-section,
+  .high-scores {
+    display: none;
+  }
+
+  .high-scores {
+    padding: 8px;
+  }
+
+  .high-scores .label {
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+  }
+
+  #high-scores p {
+    font-size: 12px;
+  }
+
+  .piece-duo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .next-piece,
+  .hold-piece {
+    margin-bottom: 0;
+  }
+
+  .next-piece .label,
+  .hold-piece .label {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  #next-canvas,
+  #hold-canvas {
+    width: 64px;
+    height: 64px;
+  }
+
+  .game-board {
+    order: 1;
+  }
+
+  .mobile-header {
+    display: flex;
+  }
+
+  .game-overlay {
+    top: 44px;
+    height: calc(100% - 44px);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .game-footer {
+    position: static;
+    order: 4;
+    margin: 10px 0 0;
+    padding-bottom: 0;
+  }
+
+  .mobile-title {
+    display: block;
+    margin-bottom: 0;
+  }
+
+  .tetris-page[data-game-state="idle"] .piece-duo,
+  .tetris-page[data-game-state="over"] .piece-duo {
+    display: none;
+  }
+
+  .tetris-page[data-game-state="idle"] .high-scores,
+  .tetris-page[data-game-state="over"] .high-scores {
+    display: block;
+  }
+
+  .tetris-page[data-game-state="idle"] .high-scores,
+  .tetris-page[data-game-state="over"] .high-scores {
+    margin-top: 0;
+  }
+
+  .game-overlay {
+    pointer-events: none;
+    z-index: 1;
   }
 
   #game-canvas {
