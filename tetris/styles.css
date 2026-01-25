@@ -67,7 +67,7 @@
   justify-content: center;
   gap: 8px;
   height: 31px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -145,7 +145,7 @@
   font-size: 28px;
   line-height: 1.1;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
   color: #0b4660;
   text-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
 }
@@ -319,7 +319,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 10px;
+  bottom: 6px;
   text-align: center;
   color: var(--tetris-muted);
   font-size: 12px;
@@ -359,7 +359,7 @@
   .game-container {
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 16px;
     flex-wrap: wrap;
   }
 
@@ -377,7 +377,11 @@
   }
 
   .tetris-shell {
-    padding-bottom: 130px;
+    padding-bottom: 80px;
+  }
+
+  .tetris-page[data-game-state="running"] .tetris-shell {
+    padding-bottom: 40px;
   }
 
   .touch-controls {
@@ -388,7 +392,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
-    padding: 8px 12px 10px;
+    padding: 6px 10px 8px;
     background: rgba(245, 249, 255, 0.96);
     border-top: 1px solid var(--tetris-line);
     box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.12);
@@ -402,8 +406,8 @@
     background: #edf7ff;
     color: #0b4660;
     font-weight: 700;
-    font-size: 0.9rem;
-    padding: 10px 8px;
+    font-size: 0.85rem;
+    padding: 8px 6px;
     border-radius: 999px;
   }
 
@@ -422,12 +426,12 @@
   }
 
   .high-scores {
-    padding: 8px;
+    padding: 6px 8px;
   }
 
   .high-scores .label {
-    margin-bottom: 6px;
-    font-size: 0.85rem;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
   }
 
   #high-scores p {
@@ -452,8 +456,8 @@
 
   #next-canvas,
   #hold-canvas {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
   }
 
   .game-board {
@@ -473,7 +477,7 @@
   .game-footer {
     position: static;
     order: 4;
-    margin: 10px 0 0;
+    margin: 6px 0 0;
     padding-bottom: 0;
   }
 
@@ -503,7 +507,7 @@
   }
 
   #game-canvas {
-    width: 250px;
-    height: 500px;
+    width: 240px;
+    height: 460px;
   }
 }
