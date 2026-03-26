@@ -1,0 +1,4 @@
+node_modules/
+.next/
+pdfedit-src/node_modules/
+pdfedit-src/.next/

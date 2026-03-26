@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Game</title>
+    <link rel="icon" href="../assets/logo.jpg" />
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="tetris-page">
+    <main class="tetris-shell">
+      <div class="game-container">
+        <div class="game-info">
+            <div class="info-panel">
+                <h1>TETRIS</h1>
+                <div class="score-section">
+                    <div class="score-item">
+                        <span class="label">SCORE</span>
+                        <span class="value" id="score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">LINES</span>
+                        <span class="value" id="lines">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">LEVEL</span>
+                        <span class="value" id="level">1</span>
+                    </div>
+                </div>
+                <div class="piece-duo">
+                    <div class="next-piece">
+                        <span class="label">NEXT</span>
+                        <canvas id="next-canvas" width="80" height="80"></canvas>
+                    </div>
+                    <div class="hold-piece">
+                        <span class="label">HOLD</span>
+                        <canvas id="hold-canvas" width="80" height="80"></canvas>
+                    </div>
+                </div>
+                <div class="high-scores">
+                  <span class="label">HIGH SCORES</span>
+                  <div id="high-scores"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board">
+            <div class="mobile-header">
+                <div class="mobile-title">TETRIS</div>
+                <a class="mobile-home" href="/">Accueil</a>
+            </div>
+            <canvas id="game-canvas" width="300" height="600"></canvas>
+            <div class="game-overlay" id="game-overlay">
+                <div class="overlay-content">
+                    <h2 id="overlay-title">TETRIS</h2>
+                    <p id="overlay-message">Press SPACE to start</p>
+                    <div class="controls">
+                        <p>← → Move</p>
+                        <p>↓ Soft Drop</p>
+                        <p>↑ Rotate</p>
+                        <p>SPACE Hard Drop</p>
+                        <p>C Hold Piece</p>
+                        <p>P Pause</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="game-stats">
+            <nav class="stats-nav">
+                <a href="/">Accueil</a>
+                <a href="/mancala/">Mancala</a>
+                <a href="/pdfedit/">PDF</a>
+            </nav>
+            <div class="info-panel stats-panel">
+                <div class="piece-stats">
+                    <div class="piece-row" data-piece="I">
+                        <canvas class="piece-icon" id="piece-icon-I" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-I" id="bar-I"></div>
+                        </div>
+                        <span class="piece-count" id="count-I">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="O">
+                        <canvas class="piece-icon" id="piece-icon-O" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-O" id="bar-O"></div>
+                        </div>
+                        <span class="piece-count" id="count-O">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="T">
+                        <canvas class="piece-icon" id="piece-icon-T" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-T" id="bar-T"></div>
+                        </div>
+                        <span class="piece-count" id="count-T">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="S">
+                        <canvas class="piece-icon" id="piece-icon-S" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-S" id="bar-S"></div>
+                        </div>
+                        <span class="piece-count" id="count-S">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="Z">
+                        <canvas class="piece-icon" id="piece-icon-Z" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-Z" id="bar-Z"></div>
+                        </div>
+                        <span class="piece-count" id="count-Z">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="J">
+                        <canvas class="piece-icon" id="piece-icon-J" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-J" id="bar-J"></div>
+                        </div>
+                        <span class="piece-count" id="count-J">0</span>
+                    </div>
+                    <div class="piece-row" data-piece="L">
+                        <canvas class="piece-icon" id="piece-icon-L" width="64" height="32"></canvas>
+                        <div class="piece-bar-wrap">
+                            <div class="piece-bar piece-L" id="bar-L"></div>
+                        </div>
+                        <span class="piece-count" id="count-L">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="game-footer">© 2025 Touchatoutix</p>
+      </div>
+    </main>
+    <div class="touch-controls" aria-label="Commandes tactiles">
+        <button type="button" class="touch-btn" data-action="ArrowLeft">◀︎</button>
+        <button type="button" class="touch-btn" data-action="ArrowRight">▶︎</button>
+        <button type="button" class="touch-btn" data-action="ArrowUp">⟳</button>
+        <button type="button" class="touch-btn" data-action="ArrowDown">▼</button>
+        <button type="button" class="touch-btn" data-action="Space">DROP</button>
+        <button type="button" class="touch-btn" data-action="KeyC">HOLD</button>
+        <button type="button" class="touch-btn" data-action="KeyP">PAUSE</button>
+        <button type="button" class="touch-btn" data-action="Start">START</button>
+    </div>
+    
+    <script src="tetris.js"></script>
+</body>
+</html>
